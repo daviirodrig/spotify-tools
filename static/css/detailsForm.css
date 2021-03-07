@@ -1,5 +1,61 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
 body {
-    background-color: #18181b;
-    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-    color: whitesmoke;
+    background-color: #222831;
+    font-family: 'Quicksand', sans-serif;
+    color: #eeeeee;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+input[type=text] {
+    border: 2px solid red;
+    border-radius: 25px;
+    background-color: #222831;
+    margin: 10px;
+    width: 230px;
+    height: 30px;
+    padding: 5px;
+    color: #eeeeee;
+    text-align: center;
+    font-family: inherit;
+    font-size: inherit;
+    transition: all 0.3s ease;
+}
+
+input[type=text]:focus {
+    width: 330px;
+    outline: none;
+    background-color: #393e46;
+}
+
+input[type=submit] {
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+input[type=submit]:focus {
+    background-color: #393e46;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.title {
+    font-size: 36px;
+    text-align: center;
+    margin: 10px;
 }
