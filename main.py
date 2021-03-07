@@ -1,6 +1,7 @@
 import os
-from spotify_utils import Spotify
 from flask import Flask, render_template, request
+from spotify_utils import Spotify
+
 
 app = Flask(__name__)
 SP_CLIENT_SECRET = os.environ.get("SP_CLIENT_SECRET")
