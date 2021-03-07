@@ -28,6 +28,15 @@ def get_song_json(song_uri):
     return res_json
 
 
+def get_playlist_json(playlist_uri):
+    playlist_id = playlist_uri.split(":")[-1]
+    access_token = get_access_token()
+    headers = {"Authorization": f"Bearer {access_token}"}
+    base_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
+    res_json = requests.get(base_url, headers=headers).json()
+    return res_json
+
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -40,3 +49,12 @@ def details():
         return render_template("detailsForm.html")
     song_json = get_song_json(song_uri)
     return render_template("details.html", song_json=song_json)
+
+
+@app.route("/playlistvis")
+def playlistviz():
+    playlist_uri = request.args.get("playlistURI")
+    if playlist_uri in (None, ""):
+        return render_template("playlistForm.html")
+    playlist_json = get_playlist_json(playlist_uri)
+    return render_template("playlist.html", playlist_json=playlist_json)
