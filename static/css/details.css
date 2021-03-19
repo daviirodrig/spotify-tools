@@ -1,0 +1,50 @@
+body {
+    background-color: #222831;
+    font-family: 'Quicksand', sans-serif;
+    color: #eeeeee;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 30px 320px;
+    grid-template-areas: "header header header" ". image details" ". song preview";
+}
+
+header {
+    font-size: 36px;
+    text-align: center;
+    margin: 10px;
+    grid-area: header;
+}
+
+img {
+    width: 320px;
+}
+
+li, ul, .song, .preview {
+    margin: 5px;
+}
+
+.image {
+    grid-area: image;
+}
+
+.song {
+    grid-area: song;
+    text-align: center;
+}
+
+.details {
+    grid-area: details;
+    align-self: center;
+}
+
+.preview {
+    text-align: center;
+    grid-area: preview;
+    align-self: center;
+}
+
+audio {
+    width: 100%;
+}

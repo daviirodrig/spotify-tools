@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from flask import Flask, render_template, request
 from spotify_utils import Spotify
 
@@ -20,6 +21,12 @@ def details():
     if song_uri in (None, ""):
         return render_template("detailsForm.html")
     song_json = sp.get_song_json(song_uri)
+    delta = str(timedelta(milliseconds=song_json["duration_ms"])).split(":")
+    duration = f"{delta[1]}:{delta[2].split('.')[0]}"
+    song_json["duration"] = duration
+    artists = [i["name"] for i in song_json["artists"]]
+    artists_str = ', '.join(artists)
+    song_json["artists_str"] = artists_str
     return render_template("details.html", song_json=song_json)
 
 

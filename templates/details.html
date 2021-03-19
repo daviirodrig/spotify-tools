@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="static/css/details.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song Details</title>
 </head>
+
 <body>
-    {% for value in song_json %}
-        <div>{{ value }}</div>
-    {% endfor %}
+    <main>
+        <header>
+            Song Details
+        </header>
+        <div class="image">
+            <img src="{{ song_json['album']['images'][0]['url'] }}" alt="">
+        </div>
+        <div class="song">
+            {{ song_json["name"] }}
+            <br>
+            {{ song_json["artists_str"] }}
+        </div>
+        <div class="details">
+            <ul>
+                <li>Song URI: {{ song_json["uri"] }}</li>
+                <li>Song duration: {{ song_json["duration"] }}</li>
+                <li>Song popularity: {{ song_json["popularity"] }}</li>
+                {%- if song_json["album"]["album_type"] == "album" -%}
+                <li>Album name: {{ song_json["album"]["name"] }}</li>
+                {%- endif -%}
+                <li>{%- if song_json["album"]["album_type"] == "album" -%}
+                    Album
+                    {% else %}
+                    Song
+                    {% endif %}
+                    release date: {{ song_json["album"]["release_date"] }}
+                </li>
+                <!--<li>{{ song_json }}</li>-->
+            </ul>
+        </div>
+        <div class="preview">
+            {%- if song_json["preview_url"] == None -%}
+            No preview available
+            {%- else -%}
+            <audio controls src="{{ song_json['preview_url'] }}"></audio>
+            {% endif %}
+        </div>
+    </main>
 </body>
+
 </html>
