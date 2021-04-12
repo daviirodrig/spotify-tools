@@ -34,7 +34,6 @@ class Spotify:
             script_json = unquote(soup.find("script", id="resource").string)
             song_json = json.loads(script_json)
             res_json["preview_url"] = song_json["preview_url"]
-            print("passo aq kk")
         return res_json
 
     def get_playlist_json(self, playlist_uri):
