@@ -1,4 +1,7 @@
+from urllib.parse import unquote
 import base64
+import json
+from bs4 import BeautifulSoup
 import requests
 
 
@@ -24,6 +27,14 @@ class Spotify:
         header = {"Authorization": f"Bearer {access_token}"}
         base_url = f"https://api.spotify.com/v1/tracks/{song_uri}"
         res_json = requests.get(base_url, headers=header).json()
+        if res_json["preview_url"] is None:
+            req = requests.get(
+                f"https://open.spotify.com/embed/track/{res_json['id']}").text
+            soup = BeautifulSoup(req, "html.parser")
+            script_json = unquote(soup.find("script", id="resource").string)
+            song_json = json.loads(script_json)
+            res_json["preview_url"] = song_json["preview_url"]
+            print("passo aq kk")
         return res_json
 
     def get_playlist_json(self, playlist_uri):
