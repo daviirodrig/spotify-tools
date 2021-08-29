@@ -1,9 +1,10 @@
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from spotify_utils import Spotify
 
-
+load_dotenv(".env")
 app = Flask(__name__)
 SP_CLIENT_SECRET = os.environ.get("SP_CLIENT_SECRET")
 SP_CLIENT_ID = os.environ.get("SP_CLIENT_ID")
