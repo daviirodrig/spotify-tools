@@ -22,11 +22,13 @@ class Spotify:
         return access_token
 
     def get_song_json(self, song_uri):
-        song_uri = song_uri.split(":")[-1]
+        song_id = song_uri.split(":")[-1]
         access_token = self.get_access_token()
         header = {"Authorization": f"Bearer {access_token}"}
-        base_url = f"https://api.spotify.com/v1/tracks/{song_uri}"
+        base_url = f"https://api.spotify.com/v1/tracks/{song_id}"
         res_json = requests.get(base_url, headers=header).json()
+
+        # Get preview_url with scraping when spotify api does not return it
         if res_json["preview_url"] is None:
             req = requests.get(
                 f"https://open.spotify.com/embed/track/{res_json['id']}").text
@@ -34,6 +36,7 @@ class Spotify:
             script_json = unquote(soup.find("script", id="resource").string)
             song_json = json.loads(script_json)
             res_json["preview_url"] = song_json["preview_url"]
+
         return res_json
 
     def get_playlist_json(self, playlist_uri):
