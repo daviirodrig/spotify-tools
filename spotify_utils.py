@@ -10,6 +10,14 @@ class Spotify:
         self.client_id = client_id
         self.client_secret = client_secret
 
+    def get_id(self, spotify_input: str):
+        # input is uri
+        if spotify_input.startswith("spotify:") and len(spotify_input.split(":")) == 3:
+            return spotify_input.split(":")[-1]
+        # input is url
+        else:
+            return spotify_input.split("/")[-1].split("?")[0]
+
     def get_access_token(self):
         auth_to_encode = f"{self.client_id}:{self.client_secret}".encode(
             "ascii")
@@ -21,8 +29,8 @@ class Spotify:
         access_token = res.json().get("access_token")
         return access_token
 
-    def get_song_json(self, song_uri):
-        song_id = song_uri.split(":")[-1]
+    def get_song_json(self, song):
+        song_id = self.get_id(song)
         access_token = self.get_access_token()
         header = {"Authorization": f"Bearer {access_token}"}
         base_url = f"https://api.spotify.com/v1/tracks/{song_id}"
@@ -39,8 +47,8 @@ class Spotify:
 
         return res_json
 
-    def get_playlist_json(self, playlist_uri):
-        playlist_id = playlist_uri.split(":")[-1]
+    def get_playlist_json(self, playlist):
+        playlist_id = self.get_id(playlist)
         access_token = self.get_access_token()
         headers = {"Authorization": f"Bearer {access_token}"}
         base_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
