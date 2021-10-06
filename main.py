@@ -42,4 +42,8 @@ def playlistviz():
     if playlist_uri in (None, ""):
         return render_template("playlistForm.html")
     playlist_json = sp.get_playlist_json(playlist_uri)
+
+    for i in playlist_json["tracks"]["items"]:
+        if not i["is_local"]:
+            i["track"]["album"]["image_url"] = i["track"]["album"]["images"][0]["url"]
     return render_template("playlist.html", playlist_json=playlist_json)
