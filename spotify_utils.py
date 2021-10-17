@@ -1,6 +1,7 @@
 from urllib.parse import unquote
 import base64
 import json
+import time
 from bs4 import BeautifulSoup
 import requests
 
@@ -9,6 +10,8 @@ class Spotify:
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
         self.client_secret = client_secret
+        self.access_token = None
+        self.access_token_expire = None
 
     def get_id(self, spotify_input: str):
         # input is uri
@@ -19,6 +22,10 @@ class Spotify:
             return spotify_input.split("/")[-1].split("?")[0]
 
     def get_access_token(self):
+        if self.access_token:
+            now = int(time.time())
+            if now < self.access_token_expire:
+                return self.access_token
         auth_to_encode = f"{self.client_id}:{self.client_secret}".encode(
             "ascii")
         auth_b64 = base64.b64encode(auth_to_encode)
@@ -27,6 +34,8 @@ class Spotify:
         res = requests.post(
             "https://accounts.spotify.com/api/token", data=body, headers=header)
         access_token = res.json().get("access_token")
+        self.access_token = access_token
+        self.access_token_expire = int(time.time()) + 3600
         return access_token
 
     def get_song_json(self, song):
