@@ -13,7 +13,8 @@ class Spotify:
         self.access_token = None
         self.access_token_expire = None
 
-    def get_id(self, spotify_input: str):
+    @staticmethod
+    def get_id(spotify_input: str):
         # input is uri
         if spotify_input.startswith("spotify:") and len(spotify_input.split(":")) == 3:
             return spotify_input.split(":")[-1]
