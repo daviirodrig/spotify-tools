@@ -9,6 +9,12 @@ body {
     color: #eeeeee;
 }
 
+header {
+    font-size: 36px;
+    text-align: center;
+    margin: 10px;
+}
+
 a:link, a:visited {
     margin: 5px;
     border: 2px solid red;
@@ -23,12 +29,6 @@ a:link, a:visited {
 a:hover, a:active {
     background-color: #393e46;
     transition: all 0.3s ease;
-}
-
-.title {
-    font-size: 36px;
-    text-align: center;
-    margin: 10px;
 }
 
 .buttons {
