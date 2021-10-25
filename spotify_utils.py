@@ -64,3 +64,15 @@ class Spotify:
         base_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
         res_json = requests.get(base_url, headers=headers).json()
         return res_json
+
+    def get_playlist_tracks(self, playlist):
+        pl_json = self.get_playlist_json(playlist)
+        tracks = pl_json["tracks"]["items"]
+        next_url = pl_json["tracks"]["next"]
+        while next_url:
+            access_token = self.get_access_token()
+            headers = {"Authorization": f"Bearer {access_token}"}
+            res = requests.get(next_url, headers=headers).json()
+            next_url = res["next"]
+            tracks.extend(res["items"])
+        return tracks

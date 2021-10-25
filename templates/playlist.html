@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        {{ playlist_json["name"] }}
+        {{ pl_name }}
     </header>
     <main>
-    {% for item in playlist_json["tracks"]["items"] %}
+    {% for item in tracks %}
         {% if not item["is_local"] %}
         <img class="songimg" src='{{ item["track"]["album"]["image_url"] }}' title="{{ item['track']['album']['name'] }}">
         {% endif %}
