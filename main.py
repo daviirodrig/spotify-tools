@@ -47,3 +47,15 @@ def playlistviz():
         if not item["is_local"]:
             item["track"]["album"]["image_url"] = item["track"]["album"]["images"][0]["url"]
     return render_template("playlist.html", tracks=tracks, pl_name=pl_name)
+
+@app.route("/playlistprint")
+def playlistprint():
+    playlist_uri = request.args.get("playlistURI")
+    if playlist_uri in (None, ""):
+        return render_template("playlistForm.html")
+    tracks = sp.get_playlist_tracks(playlist_uri)
+    pl_name = sp.get_playlist_json(playlist_uri)["name"]
+    for item in tracks:
+        if not item["is_local"]:
+            item["track"]["album"]["image_url"] = item["track"]["album"]["images"][0]["url"]
+    return render_template("playlistPrint.html", tracks=tracks, pl_name=pl_name)
